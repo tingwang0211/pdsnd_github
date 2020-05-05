@@ -162,7 +162,7 @@ def convert_time(time):
     Returns:
         (str) time during displayed in "DD days, HH hour(s), MM minute(s), SS second(s)"
     """
-    
+
     t_str = str(datetime.timedelta(seconds=int(time))).split(':')
     t_units = [' hour(s)', ' minute(s)', ' second(s)']
     t_msg = [str(int(ts[-2:])) + tu for ts, tu in zip(t_str, t_units) if int(ts[-2:]) != 0]
@@ -174,7 +174,7 @@ def show_mth_dow(mth, dow):
     Display the month (if any) and day of the week (if any) filter(s) in the messages displaying relevant statistics.
     """
 
-    return ('' if dow == 'All' else ' on ' + dow + 's') + ('' if mth == 'All' else ' in ' + mth )
+    return '%s in H1 2017' % (('' if dow == 'All' else ' on %ss' % dow) + ('' if mth == 'All' else ' in %s' % mth ))
 
 
 def main():
