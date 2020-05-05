@@ -18,10 +18,10 @@ def get_city():
         (str) name of the city to analyze
     """
 
-    city_input = input('\nPlease choose a city (' + ', '.join(city_dict) + ') to explore:\n')
+    city_input = input('\nPlease choose a city (%s) to explore:\n' % ', '.join(city_dict))
     while not city_dict.get(city_input.title()):
-        city_input = input('\nPlease enter a correct city name from the following:\n' \
-                           + ', '.join(city_dict) + '\n')
+        city_input = input('\nPlease enter a correct city name from the following:\n%s\n' \
+                           % ', '.join(city_dict))
     return city_input.title()
 
 
@@ -54,18 +54,18 @@ def get_filters():
         (str) name of the day of week to filter by, or "All" to apply no day filter
     """
 
-    mth_input = input('\nWhich month (' + ', '.join(mth_list[:-1]) + ') would you like to investigate in details? \
-                      \nPlease enter "All" if no month filtering is needed\n')
+    mth_input = input('\nWhich month (%s) would you like to investigate in details? \
+                      \nPlease enter "All" if no month filtering is needed\n' % ', '.join(mth_list[:-1]))
     while mth_input.title() not in mth_list:
-        mth_input = input('\nPlease enter a correct month from the following:\n' \
-                          + ', '.join(mth_list[:-1]) + ', or enter "All" for no filtering \n')
+        mth_input = input('\nPlease enter a correct month from the following: \
+                          \n%s, or enter "All" for no filtering \n' % ', '.join(mth_list[:-1]))
     mth_input = mth_input.title()
 
-    dow_input = input('\nWhich day of the week (' + ', '.join(dow_list[:-1]) + ') would you like to investigate in details? \
-                      \nPlease enter "All" if no day of the week filtering is needed\n')
+    dow_input = input('\nWhich day of the week (%s) would you like to investigate in details? \
+                      \nPlease enter "All" if no day of the week filtering is needed\n' % ', '.join(dow_list[:-1]))
     while dow_input.title() not in dow_list:
-        dow_input = input('\nPlease enter a correct day of the week from the following:\n' \
-                          + ', '.join(dow_list[:-1]) + ', or enter "All" for no filtering \n')
+        dow_input = input('\nPlease enter a correct day of the week from the following: \
+                          \n%s, or enter "All" for no filtering \n' % ', '.join(dow_list[:-1]))
     dow_input = dow_input.title()
     return mth_input, dow_input
 
@@ -120,37 +120,35 @@ def display_stats(df, mth, dow):
     print('\n' + '-'*40)
 
     if mth == 'All':
-        print('\nThe most popular month for travel' + show_mth_dow (mth, dow) \
-              + ' is: ' + df.month.mode()[0])
+        print('\nThe most popular month for travel%s is: %s' \
+              % (show_mth_dow(mth, dow), df.month.mode()[0])) 
     if dow == 'All':
-        print('\nThe most popular day of the week for travel' + show_mth_dow (mth, dow) \
-              + ' is: ' + df.dow.mode()[0])
-    print('\nThe most popular hour for travel' + show_mth_dow (mth, dow) \
-          + ' is: ' + str(df.hour.mode()[0]) + ":00 ~ " + str(df.hour.mode()[0]+1) + ":00")
-    print('\nThe most popular start station' + show_mth_dow (mth, dow) \
-          + ' is: ' + df['Start Station'].mode()[0])
-    print('\nThe most popular end station' + show_mth_dow (mth, dow) \
-          + ' is: ' + df['End Station'].mode()[0])
-    print('\nThe most popular trip' + show_mth_dow (mth, dow) \
-          + ' is: ' + df.trip.mode()[0])
-    print('\nThe total travel time' + show_mth_dow (mth, dow) \
-          + ' is: ' + convert_time(df['Trip Duration'].sum())) 
-    print('\nThe average travel time' + show_mth_dow (mth, dow) \
-          + ' is: ' + convert_time(df['Trip Duration'].mean()))
-    print('\nTotal number of users in each user type' + show_mth_dow (mth, dow) + ' are as follow:\n' \
-          + df['User Type'].value_counts().to_string())
+        print('\nThe most popular day of the week for travel%s is: %s' \
+              % (show_mth_dow(mth, dow), df.dow.mode()[0]))
+    print('\nThe most popular hour for travel%s is: %d:00 ~ %d:00' \
+          % (show_mth_dow(mth, dow), df.hour.mode()[0], df.hour.mode()[0] + 1))
+    print('\nThe most popular start station%s is: %s' \
+          % (show_mth_dow(mth, dow), df['Start Station'].mode()[0]))
+    print('\nThe most popular end station%s is: %s' \
+          % (show_mth_dow(mth, dow), df['End Station'].mode()[0]))
+    print('\nThe most popular trip%s is: %s' \
+          % (show_mth_dow(mth, dow), df.trip.mode()[0]))
+    print('\nThe total travel time%s is: %s' \
+          % (show_mth_dow(mth, dow), convert_time(df['Trip Duration'].sum())))
+    print('\nThe average travel time%s is: %s' \
+          % (show_mth_dow(mth, dow), convert_time(df['Trip Duration'].mean())))
+    print('\nTotal number of users in each user type%s are as follow:\n%s' \
+          % (show_mth_dow(mth, dow), df['User Type'].value_counts().to_string()))
 
     try:
-        print('\nTotal number of users in each gender group' + show_mth_dow (mth, dow) + ' are as follow:\n' \
-              + df['Gender'].value_counts().to_string())
-        print('\nThe most common birth year of users' + show_mth_dow (mth, dow) \
-              + ' is ' + str(int(df['Birth Year'].mode()[0])) \
-              + ', with the oldest user born in ' + str(int(df['Birth Year'].min())) \
-              + ' and the youngest born in ' + str(int(df['Birth Year'].max())) + '\n')
+        print('\nTotal number of users in each gender group%s are as follow:\n%s' \
+              % (show_mth_dow(mth, dow), df['Gender'].value_counts().to_string()))
+        print('\nThe most common birth year of users%s is %d, with the oldest user born in %d and the youngest born in %d\n' \
+              % (show_mth_dow(mth, dow), int(df['Birth Year'].mode()[0]), int(df['Birth Year'].min()), int(df['Birth Year'].max())))
     except:
         print('\nUnfortunately no further user related data is available for Washington\n')
     
-    print("\nThis took %s seconds." % round(time.time() - start_time, 4))
+    print('\nThis took %s seconds.' % round(time.time() - start_time, 4))
     print('-'*40)
 
 
@@ -164,13 +162,14 @@ def convert_time(time):
     Returns:
         (str) time during displayed in "DD days, HH hour(s), MM minute(s), SS second(s)"
     """
+    
     t_str = str(datetime.timedelta(seconds=int(time))).split(':')
     t_units = [' hour(s)', ' minute(s)', ' second(s)']
     t_msg = [str(int(ts[-2:])) + tu for ts, tu in zip(t_str, t_units) if int(ts[-2:]) != 0]
-    return (t_str[0][:-2].strip() + ' ' + ', '.join(t_msg)).strip()
+    return ('%s %s' % (t_str[0][:-2].strip(), ', '.join(t_msg))).strip()
 
 
-def show_mth_dow (mth, dow):
+def show_mth_dow(mth, dow):
     """
     Display the month (if any) and day of the week (if any) filter(s) in the messages displaying relevant statistics.
     """
