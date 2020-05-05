@@ -5,7 +5,6 @@ import time
 city_dict = { 'Chicago': 'chicago.csv',
               'New York City': 'new_york_city.csv',
               'Washington': 'washington.csv' }
-# mth_list only includes the first six months since all data sets only have the first six months of data available
 mth_list = ['January', 'February', 'March', 'April', 'May', 'June', 'All']
 dow_list = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday', 'Sunday', 'All']
 yes_list = ['Yes', 'Y', 'Ya', 'Ye', 'Yeah', 'Yup', 'Yea']
